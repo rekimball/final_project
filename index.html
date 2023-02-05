@@ -14,35 +14,31 @@
     />
     <link rel="stylesheet" href="./css/final_project.css" />
   </head>
-  <body>
     <!-- <div id="loading">
         <img id="loading-image" src="images/Fidget-spinner.gif" alt="Loading..." />
     </div> -->
+    <body>
     <header>
       <nav>
           <ul>
-            <img src="images/movie-action.jpg" width="80" height="60" style="float:left"/>
+            <img src="images/movie-film1.png" width="90px" height="60px" style="float:left; margin: 0px;"/>
             <li><a href="final_project.html">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="final_project.md">About</a></li>
             <form>
-              <input id="inputText" type="text" value="">
+              <input id="inputText" type="text" value="" placeholder="Search for a tv show...">
               <select name="search-criteria" id="search-criteria">
-                <option value="movieTitle">Movie Title</option>
-                <option value="year">Year</option>
-                <option value="rank">Rank</option>
+                <option value="title">TV Title</option>
+                <option value="year">TV Year</option>
+                <option value="rating">IMDb Rating</option>
               </select>
               <button type="button" value="search" onclick="search()">Search</button>
             </form>
           </ul>
         </nav>
     </header>
-    <content>
-      <div id="movieContent">
-        <!-- <div id="image"></div>
-        <div id="ranking"></div>
-        <div id="titleAndyear"></div>
-        <div id="rating"></div> -->
-      </div>
+    <h1><b>Current Top 100 TV Shows</b></h1>
+    <content id="content">
+
     </content>
     <script src="./js/final_project.js"></script>
   </body>

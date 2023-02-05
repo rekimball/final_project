@@ -3,45 +3,46 @@
 //     $('#loading').hide();
 //   });
 
-const movieUrl = 'https://imdb-api.com/en/API/MostPopularTVs/k_d9yquiig';
+//set api url to variable
+const tvUrl = 'https://imdb-api.com/en/API/MostPopularTVs/k_d9yquiig';
+const tvTitleUrl = 'https://imdb-api.com/en/API/AdvancedSearch/k_d9yquiig/?title=';
+const tvYearUrl = 'https://imdb-api.com/en/API/AdvancedSearch/k_d9yquiig/?year=';
+const tvRatingUrl = 'https://imdb-api.com/en/API/AdvancedSearch/k_d9yquiig/?user_rating=';
 
-const image = document.querySelector('movieImage');
-let searchValue = document.getElementById('inputText').value
-let searchCriteria = document.getElementById('search-criteria').value
+//get elements and set them to a variable
+const allContent = document.getElementById('content');
+const image = document.querySelector('tvImage');
+const searchValue = document.getElementById('inputText').value
+const searchCriteria = document.getElementById('search-criteria').value
+const pageTitle = document.querySelector('b');
 
-// fetch(movieUrl)
-//   .then(response => response.json())
-//   .then(data => {
-//     console.log(data)
-//   })
-//   .catch(error => {
-//     console.log("Something went wrong..", error);
-//     alert("Sorry, something went wrong trying to load the feed. Click to refresh and try again")
-//   })
+
 async function showAll() {
-  fetch(movieUrl)
+  fetch(tvUrl)
     .then(response => response.json())
     .then(data => {
-      data.items.forEach(movie => {
-            let image = document.createElement('img');
-            let ranking = document.createElement('h1')
-            let titleyear = document.createElement('h2');
-            let rating = document.createElement('h3');
-            image.src = movie.image
-            ranking.innerText = 'Ranking: ' + movie.rank;
-            titleyear.innerText = 'Movie Title: ' + movie.title + ' - ' + movie.year;
-            rating.innerText = 'Rating: ' + movie.imDbRating;
-            image.append(ranking)
-            ranking.append(titleyear)
-            titleyear.append(rating)
+      data.items.forEach(tv => {
+        //console.log(data)
+            const tvContent = document.createElement('div');
+            const image = document.createElement('img');
+            image.style.height = "118px";
+            const ranking = document.createElement('h2')
+            const titleYear = document.createElement('h3');
+            const rating = document.createElement('h4');
+            image.src = tv.image
+            ranking.innerText = 'Rank: ' + tv.rank;
+            titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.year;
+            rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
 
-            document.getElementById("movieContent").appendChild(image)
-            // document.getElementById("image").appendChild(image);
-            // document.getElementById("ranking").appendChild(ranking);
-            // document.getElementById("titleAndyear").appendChild(titleyear);
-            // document.getElementById("rating").appendChild(rating);
-            //console.log(movie.title);
-            console.log(image)
+            //append inner elements to div element
+            tvContent.append(image)
+            tvContent.append(ranking)
+            tvContent.append(titleYear)
+            tvContent.append(rating)
+
+            //append child div element to content parent element
+            allContent.appendChild(tvContent)
+            //console.log(image)
         })
       })
         .catch(err => {
@@ -51,105 +52,131 @@ async function showAll() {
 };
 window.onload = showAll();
 
-// function clearContent(){
-//   const element = document.getElementById('movieContent');
-//   while (element.hasChildNodes())
-//   element.firstChild.remove()
-//   element.innerHTML = '';
-// }
+//clear all images and text from content area
+function clearContent(){
+  const clear = document.getElementById('content');
+  while (clear.hasChildNodes())
+  clear.firstChild.remove()
+  clear.innerHTML = '';
+}
 
-//   function search(){
-//     clearContent();
+//search function- when search button is clicked
+async function search(){
+    //clear content first before proceeding
+    clearContent();
 
-//     if(document.getElementById('inputText').value == ''){
-//       document.getElementById('movieContent').innerText = 'No search text entered. Please enter text in the search box above and try again.';
-//       return;
-//     }
+    if(document.getElementById('inputText').value == ''){
+      alert("No search text entered. Please enter text in the search box and try again.")
+    }
 
-//     let searchValue = document.getElementById('inputText').value;
-//     let searchCriteria = document.getElementById('search-criteria').value;
+  const searchValue = document.getElementById('inputText').value;
+  const searchCriteria = document.getElementById('search-criteria').value
 
-//     //search movie title
-//    if (searchCriteria === 'movieTitle'){
-//     fetch(movieUrl + searchValue)
-//         .then(response => response.json())
-//         .then(data => {
-//                 const image = document.createElement('img');
-//                 const ranking = document.createElement('h1')
-//                 const titleyear = document.createElement('h2');
-//                 const rating = document.createElement('h3');
-//                 image.src = data.items.image
-//                 ranking.innerText = 'Ranking: ' + data.items.rank;
-//                 titleyear.innerText = 'Movie Title: ' + data.items.title + ' - ' + data.items.year;
-//                 rating.innerText = 'Rating: ' + data.items.imDbRating;
-//                 document.getElementById("image").appendChild(image);
-//                 document.getElementById("ranking").appendChild(ranking);
-//                 document.getElementById("titleAndyear").appendChild(titleyear);
-//                 document.getElementById("rating").appendChild(rating);
-//                 document.getElementById("inputText").value = ""; // clearing input field after clicking search
-//                 //console.log(movie.title);
-//             })
-//             .catch(err => {
-//              console.log("something went wrong..", err);
-//              alert("No matches! Try something else!")
-//            });
-//     }
-//   };
-    //search movie year
-    // if (searchCriteria === 'year'){
-    //   fetch(movieUrl + searchValue)
-    //       .then(response => response.json())
-    //       .then(data => {
-    //         data.items.forEach(movie => {
-    //               const year = document.createElement('p');
-    //               year.innerText = 'Movie Year: ' + movie.year;
-    //               document.getElementById("movieContent").appendChild(year);
-    //               document.getElementById("inputText").value = ""; // clearing input field after clicking search
-    //               console.log(movie.year);
-    //           })
-    //         })
-    //           .catch(err => {
-    //            console.log("something went wrong..", err);
-    //            alert("No matches! Try something else!")
-    //          });
-    //   }
- 
- 
-    //search movie rank
-    // if (searchCriteria === 'rank'){
-    //   fetch(movieUrl + searchValue)
-    //       .then(response => response.json())
-    //       .then(data => {
-    //         data.items.forEach(movie => {
-    //               const rank = document.createElement('p');
-    //               rank.innerText = 'Movie Rank: ' + movie.rank;
-    //               document.getElementById("movieContent").appendChild(rank);
-    //               document.getElementById("inputText").value = ""; // clearing input field after clicking search
-    //               console.log(movie.rank);
-    //           })
-    //         })
-    //           .catch(err => {
-    //            console.log("something went wrong..", err);
-    //            alert("No matches! Try something else!")
-    //          });
-    //   }
+//search for tv title
+  if (searchCriteria === 'title'){
+    // console.log(searchValue)
+    // console.log(tvTitleUrl + searchValue)
+    fetch(tvTitleUrl + searchValue)
+    .then(response => response.json())
+    .then(data => {
+      data.results.forEach(tv => {
+        // console.log(data)
+            const tvContent = document.createElement('div');
+            const image = document.createElement('img');
+            image.style.height = "118px";
+            const ranking = document.createElement('h2')
+            const titleYear = document.createElement('h3');
+            const rating = document.createElement('h4');
+            image.src = tv.image
+            ranking.innerText = 'Votes: ' + tv.imDbRatingVotes;
+            titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.description;
+            rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
+            pageTitle.innerText = 'TV titles with ' + searchValue;
 
-//     return fetch(movieUrl)
-//         .then(response => response.json())
-//         .then(data => {
-//         data.items.forEach(movie => {
-//             searchValue = document.getElementById('inputText').value;
-//             if (searchValue == movie.movieTitle){
-//                 const movieTitle = document.createElement('p');
-//                 movieTitle.innerText = 'Movie Title: ' + movie.name;
-//                 document.getElementById("movieContent").appendChild(movieTitle);
-//                 resultText = 1;
-//             }
-//             console.log(resultText);
-//         })
-//     }).catch(error => {
-//         console.log("Something went wrong..", error);
-//         return error;
-//     }); 
+            //append inner elements to div element
+            tvContent.append(image)
+            tvContent.append(ranking)
+            tvContent.append(titleYear)
+            tvContent.append(rating)
 
-// }
+            //append child div element to content parent element
+            allContent.appendChild(tvContent)
+            //console.log(image)
+        })
+      })
+        .catch(err => {
+         console.log("something went wrong..", err);
+         alert("No matches! Try something else!")
+       });
+}
+ //search for tv year
+ if (searchCriteria === 'year'){
+  fetch(tvYearUrl + searchValue)
+  .then(response => response.json())
+  .then(data => {
+    data.results.forEach(tv => {
+      //console.log(data)
+          const tvContent = document.createElement('div');
+          const image = document.createElement('img');
+          image.style.height = "118px";
+          const ranking = document.createElement('h2')
+          const titleYear = document.createElement('h3');
+          const rating = document.createElement('h4');
+          image.src = tv.image
+          ranking.innerText = 'Votes: ' + tv.imDbRatingVotes;
+          titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.description;
+          rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
+          pageTitle.innerText = 'TV years of ' + searchValue;
+
+          //append inner elements to div element
+          tvContent.append(image)
+          tvContent.append(ranking)
+          tvContent.append(titleYear)
+          tvContent.append(rating)
+
+          //append child div element to content parent element
+          allContent.appendChild(tvContent)
+          //console.log(image)
+      })
+    })
+      .catch(err => {
+       console.log("something went wrong..", err);
+       alert("No matches! Try something else!")
+     });
+}
+//search for tv rating
+if (searchCriteria === 'rating'){
+  fetch(tvRatingUrl + searchValue)
+  .then(response => response.json())
+  .then(data => {
+    data.results.forEach(tv => {
+      //console.log(data)
+          const tvContent = document.createElement('div');
+          const image = document.createElement('img');
+          image.style.height = "118px";
+          const ranking = document.createElement('h2')
+          const titleYear = document.createElement('h3');
+          const rating = document.createElement('h4');
+          image.src = tv.image
+          ranking.innerText = 'Votes: ' + tv.imDbRatingVotes;
+          titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.description;
+          rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
+          pageTitle.innerText = 'TV ratings of ' + searchValue;
+
+          //append inner elements to div element
+          tvContent.append(image)
+          tvContent.append(ranking)
+          tvContent.append(titleYear)
+          tvContent.append(rating)
+
+          //append child div element to content parent element
+          allContent.appendChild(tvContent)
+          //console.log(image)
+      })
+    })
+      .catch(err => {
+       console.log("something went wrong..", err);
+       alert("No matches! Try something else!")
+     });
+}
+};
