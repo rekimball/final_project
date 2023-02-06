@@ -62,7 +62,7 @@ For the final project, you'll be designing and building a web app of your choice
 Single Page Applications (SPA) are all the rage today. The single page aspect of a SPA refers to a single page coming from the server, such as our index.html page. Once loaded, the SPA changes views by using client-side routing, which loads partial HTML snippets called templates. Think back to our Advanced APIs lesson where we showed specific views based off the login state of a user. The goal for you implementing a SPA is to not make users have to refresh the entire DOM every time they need a new piece of data to be represented in the UI.
 
 ---
-### SPA Architecture
+### Necessary Deliverables
 -A production ready web application, SPA, hosted live on the web.
 -A new git repository hosted on Github where codebase is maintained.
 -A 5-10 minute presentation including 3 technical hurdles, 2 new things you learned, Q&A.
