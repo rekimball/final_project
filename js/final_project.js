@@ -16,29 +16,33 @@ const searchValue = document.getElementById('inputText').value
 const searchCriteria = document.getElementById('search-criteria').value
 const pageTitle = document.querySelector('b');
 
-
 async function showAll() {
   fetch(tvUrl)
     .then(response => response.json())
     .then(data => {
       data.items.forEach(tv => {
-        //console.log(data)
+        console.log(data)
             const tvContent = document.createElement('div');
             const image = document.createElement('img');
             image.style.height = "118px";
             const ranking = document.createElement('h2')
             const titleYear = document.createElement('h3');
             const rating = document.createElement('h4');
+            const likeDislike = document.createElement('h5')
+
             image.src = tv.image
             ranking.innerText = 'Rank: ' + tv.rank;
             titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.year;
             rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
+            likeDislike.innerHTML = '<i onclick="toggleUp(this)" class="fa fa-thumbs-up"></i><i onclick="toggleDown(this)" class="fa fa-thumbs-down"></i>'
+          // likeDislike.innerHTML = '<i onclick="toggle(this)" class="fa fa-thumbs-up"></i>'
 
             //append inner elements to div element
             tvContent.append(image)
             tvContent.append(ranking)
             tvContent.append(titleYear)
             tvContent.append(rating)
+            tvContent.append(likeDislike)
 
             //append child div element to content parent element
             allContent.appendChild(tvContent)
@@ -51,6 +55,16 @@ async function showAll() {
        });
 };
 window.onload = showAll();
+
+//toggle thumbs up/down
+function toggleUp(x) {
+  x.style.backgroundColor = "green";
+}
+
+function toggleDown(y) {
+  y.style.backgroundColor = "red";
+}
+
 
 //clear all images and text from content area
 function clearContent(){
@@ -87,17 +101,22 @@ async function search(){
             const ranking = document.createElement('h2')
             const titleYear = document.createElement('h3');
             const rating = document.createElement('h4');
+            const likeDislike = document.createElement('h5')
+
             image.src = tv.image
             ranking.innerText = 'Votes: ' + tv.imDbRatingVotes;
             titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.description;
             rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
-            pageTitle.innerText = 'TV titles with ' + searchValue;
+            pageTitle.innerText = 'TV and movie titles containing ' + searchValue;
+            likeDislike.innerHTML = '<i onclick="toggleUp(this)" class="fa fa-thumbs-up"></i><i onclick="toggleDown(this)" class="fa fa-thumbs-down"></i>'
+          // likeDislike.innerHTML = '<i onclick="toggle(this)" class="fa fa-thumbs-up"></i>'
 
             //append inner elements to div element
             tvContent.append(image)
             tvContent.append(ranking)
             tvContent.append(titleYear)
             tvContent.append(rating)
+            tvContent.append(likeDislike)
 
             //append child div element to content parent element
             allContent.appendChild(tvContent)
@@ -122,17 +141,22 @@ async function search(){
           const ranking = document.createElement('h2')
           const titleYear = document.createElement('h3');
           const rating = document.createElement('h4');
+          const likeDislike = document.createElement('h5')
+
           image.src = tv.image
           ranking.innerText = 'Votes: ' + tv.imDbRatingVotes;
           titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.description;
           rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
-          pageTitle.innerText = 'TV years of ' + searchValue;
-
+          pageTitle.innerText = 'TV shows and movies made/released in the year ' + searchValue;
+          likeDislike.innerHTML = '<i onclick="toggleUp(this)" class="fa fa-thumbs-up"></i><i onclick="toggleDown(this)" class="fa fa-thumbs-down"></i>'
+          // likeDislike.innerHTML = '<i onclick="toggle(this)" class="fa fa-thumbs-up"></i>'
+          
           //append inner elements to div element
           tvContent.append(image)
           tvContent.append(ranking)
           tvContent.append(titleYear)
           tvContent.append(rating)
+          tvContent.append(likeDislike)
 
           //append child div element to content parent element
           allContent.appendChild(tvContent)
@@ -157,17 +181,22 @@ if (searchCriteria === 'rating'){
           const ranking = document.createElement('h2')
           const titleYear = document.createElement('h3');
           const rating = document.createElement('h4');
+          const likeDislike = document.createElement('h5')
+          
           image.src = tv.image
           ranking.innerText = 'Votes: ' + tv.imDbRatingVotes;
           titleYear.innerText = 'Title: ' + tv.title + ' - ' + tv.description;
           rating.innerText = 'IMDb Rating: ' + tv.imDbRating;
-          pageTitle.innerText = 'TV ratings of ' + searchValue;
+          pageTitle.innerText = 'TV shows and movies with an IMDb rating of ' + searchValue;
+          likeDislike.innerHTML = '<i onclick="toggleUp(this)" class="fa fa-thumbs-up"></i><i onclick="toggleDown(this)" class="fa fa-thumbs-down"></i>'
+          // likeDislike.innerHTML = '<i onclick="toggle(this)" class="fa fa-thumbs-up"></i>'
 
           //append inner elements to div element
           tvContent.append(image)
           tvContent.append(ranking)
           tvContent.append(titleYear)
           tvContent.append(rating)
+          tvContent.append(likeDislike)
 
           //append child div element to content parent element
           allContent.appendChild(tvContent)
